@@ -1,17 +1,19 @@
 from models.artist import Artist
 from models.config import Config
+from models.traits import Category, Traits
 
 import typing
 
 
-class Lama:
+class Llama:
 
     pixels: list = []
 
-    def __init__(self):
+    def __init__(self, *, asset_path: str, traits: Traits):
         self.artist = Artist(configuration=Config(pixel_size=15, pen_color="white",
                                                   pen_size=5, background_color="black", shadow_color="gray"))
-        self.populate()
+        self.traits = traits
+        self.populate(asset=asset_path)
 
     def draw(self):
         for i in range(0, len(self.pixels)):
@@ -24,9 +26,9 @@ class Lama:
             self.artist.move(pixels=0, heading=0)
         self.artist.done()
 
-    def populate(self):
+    def populate(self, asset: str):
         # https://www.dcode.fr/binary-image
-        with open("assets/lama.txt", "r") as f:
+        with open(asset, "r") as f:
             for line in f.readlines():
                 line = line.strip().replace("\n", "")
                 self.pixels.append([int(character) for character in line])

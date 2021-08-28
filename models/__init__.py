@@ -1,3 +1,2 @@
-from .artist import Artist
-from .config import Config
-from .lama import Lama
+from .llama import Llama
+from .traits import Traits, Category
