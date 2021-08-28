@@ -17,10 +17,10 @@ class Artist:
         goto(self.configuration.pen_size/2 - screen.window_width()/2,
              screen.window_height()/2 - self.configuration.pen_size/2)
         pendown()
-        hideturtle()
+        tracer(False)
 
     def draw_pixel(self, is_shadow: bool = False):
-        tracer(False)
+
         pendown()
         pensize(self.configuration.pen_size)
         color(
@@ -37,3 +37,7 @@ class Artist:
         setheading(heading)
         forward(pixels * self.configuration.pixel_size)
         pendown()
+
+    def done(self):
+        hideturtle()
+        done()

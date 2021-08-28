@@ -22,6 +22,7 @@ class Lama:
             self.artist.move(pixels=len(self.pixels[i]), heading=180)
             self.artist.move(pixels=1, heading=270)
             self.artist.move(pixels=0, heading=0)
+        self.artist.done()
 
     def populate(self):
         # https://www.dcode.fr/binary-image
