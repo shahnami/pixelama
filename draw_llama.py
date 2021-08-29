@@ -148,7 +148,7 @@ def create_traits() -> Traits:
 
 
 def create_palette(traits: Traits) -> Palette:
-    scarf_colours = generate_random_scarf_colours()
+    scarf_colours = traits.scarf == Scarf.STANDARD and '#FFFFFF' or generate_random_scarf_colours()
     has_optics = traits.getoptic() != Optic.STANDARD
     return Palette(
         body=get_body_colours(traits.getbody())["body"],
@@ -159,7 +159,7 @@ def create_palette(traits: Traits) -> Palette:
         scarf2=scarf_colours[1],
         eyes=has_optics and get_eyes_for_optic(
             traits.getoptic()) or get_eyes_for_mood(traits.getmood()),
-        hat=generate_random_hat_colours(),
+        hat=traits.hat == Hat.STANDARD and '#FFFFFF' or generate_random_hat_colours(),
         background=generate_random_background()
     )
 
@@ -219,7 +219,7 @@ def demo():
     llama = create_llama(artist=artist, traits=traits)
 
     if is_unique(llama):
-        store_hash(llama)
+        # store_hash(llama)
 
         llama.save(
             file_name='assets/output/demo-1.svg',
