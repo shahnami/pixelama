@@ -7,7 +7,7 @@ echo "Type in the collection name [ENTER]:"
 
 read name
 
-for i in $( eval echo {0..$items} )
+for i in $( eval echo {1..$items} )
 do
 	python3 draw_llama.py --save $name-$i
 done

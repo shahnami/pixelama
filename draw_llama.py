@@ -52,10 +52,10 @@ def store_hash(llama: Llama):
 
 def generate_random_background() -> str:
     options = [
-        "#506C33", "#5C4837", "#3C2252",
-        "#953830", "#9D8232", "#35547A",
-        "#35547A", "#35547A", "#57226F",
-        "#E16CB0", "#E16CB0", "#E16CB0"
+        "#379154", "#39B4BF", "#FFE666",
+        "#946FB0", "#E64E67", "#574F8C",
+        "#6F81A6", "#8FBDD9", "#88BABF",
+        "#F2CC85", "#FFCEF6", "#FF599F"
     ]
     return random.choice(options)
 
@@ -110,7 +110,7 @@ def get_body_colours(body: Body) -> dict:
     if body == Body.BEIGE:
         return {"body": "#faf0e6", "shadow": "#eed9c4"}
     elif body == Body.BLACK:
-        return {"body": "#b2b2b2", "shadow": "#666666"}
+        return {"body": "#b2b2b2", "shadow": "#8E8E8E"}
     else:
         return {"body": "#FFFFFF", "shadow": "#EEEEEE"}
 
@@ -129,10 +129,10 @@ def generate_random_scarf() -> Scarf:
 
 def generate_random_scarf_colours() -> [str, str]:
     options = [
-        "#FFF000", "#08E8DE", "#1974D2",
-        "#66FF00", "#FFAA1D", "#FF007F",
-        "#FF007F", "#FA30A2", "#FF73E6",
-        "#B87BFF", "#A763FF", "#A763FF"
+        "#E80278", "#144EA9", "#FFD601",
+        "#F96524", "#8040A6", "#7D1335",
+        "#B6395D", "#241026", "#9F8D66",
+        "#34FAAB", "#32F0D9", "#DCDCDC"
     ]
     return random.choices(options, k=2)
 
@@ -193,6 +193,43 @@ def generate_collection(output: str = ''):
         print(f"[!] - [Hash already exists] - {nft_hash}")
 
 
+def demo():
+    traits = Traits(
+        mood=Mood.STANDARD,
+        hat=Hat.STANDARD,
+        scarf=Scarf.STANDARD,
+        optic=Optic.STANDARD,
+        body=Body.STANDARD,
+    )
+
+    palette = Palette(
+        body=get_body_colours(traits.getbody())["body"],
+        shadow=get_body_colours(traits.getbody())["shadow"],
+        dark="#000000",
+        cheeks=get_cheeks_for_mood(traits.getmood()),
+        scarf1="blue",
+        scarf2="blue",
+        eyes="black",
+        hat="brown",
+        background="#8FBDD9"
+    )
+
+    configuration = Config(pixel_size=22, pen_size=1, palette=palette)
+    artist = Artist(configuration=configuration)
+    llama = create_llama(artist=artist, traits=traits)
+
+    if is_unique(llama):
+        store_hash(llama)
+
+        llama.save(
+            file_name='assets/output/demo-1.svg',
+            size=("1024px", "1024px")
+        )
+    else:
+        nft_hash = hashlib.sha256(bytes(llama)).hexdigest()
+        print(f"[!] - [Hash already exists] - {nft_hash}")
+
+
 if __name__ == '__main__':
 
     argumentList = sys.argv[1:]
@@ -209,7 +246,7 @@ if __name__ == '__main__':
             if currentArgument in ("-h", "--help"):
                 print("Your options are: --help and --save <file_name>")
             elif currentArgument in ("-p", "--print"):
-                generate_collection()
+                demo()
             elif currentArgument in ("-s", "--save"):
                 print("Saving drawing to file:", currentValue)
                 generate_collection(output=currentValue)
