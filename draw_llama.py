@@ -157,7 +157,7 @@ def create_llama(*, artist: Artist, traits: Traits) -> Llama:
 def generate_collection(output: str = ''):
     traits = create_traits()
     palette = create_palette(traits)
-    configuration = Config(pixel_size=20, pen_size=4, palette=palette)
+    configuration = Config(pixel_size=22, pen_size=1, palette=palette)
     artist = Artist(configuration=configuration)
     llama = create_llama(artist=artist, traits=traits)
 
@@ -179,8 +179,8 @@ def generate_collection(output: str = ''):
 if __name__ == '__main__':
 
     argumentList = sys.argv[1:]
-    options = "hs:"
-    long_options = ["help", "save="]
+    options = "hps:"
+    long_options = ["help", "print", "save="]
 
     try:
         # Parsing argument
@@ -191,14 +191,14 @@ if __name__ == '__main__':
 
             if currentArgument in ("-h", "--help"):
                 print("Your options are: --help and --save <file_name>")
-
+            elif currentArgument in ("-p", "--print"):
+                generate_collection()
             elif currentArgument in ("-s", "--save"):
                 print("Saving drawing to file:", currentValue)
                 generate_collection(output=currentValue)
                 exit(1)
-            else:
-                generate_collection()
 
     except getopt.error as err:
         # output error, and return with an error code
         print(str(err))
+        exit(0)
