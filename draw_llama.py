@@ -7,7 +7,7 @@ import hashlib
 from enum import Enum
 from odds_handler import OddsHandler
 from models.llama import Llama
-from models.traits import Traits, Mood, Hat, Scarf, Optic, TraitType
+from models.traits import Traits, Mood, Hat, Scarf, Optic, TraitType, Body
 from models.palette import Palette
 from models.config import Config
 from models.artist import Artist
@@ -23,6 +23,8 @@ def get_odds(value: any, trait: TraitType) -> float:
         return handler.odds_for_mood(value)
     elif trait == TraitType.SCARF:
         return handler.odds_for_scarf(value)
+    elif trait == TraitType.BODY:
+        return handler.odds_for_body(value)
 
 
 def generate_odds_options(options: list, trait: TraitType) -> list:
@@ -65,49 +67,63 @@ def generate_random_hat_colours() -> str:
     return random.choice(options)
 
 
+def generate_random_hat() -> Hat:
+    options = generate_odds_options([Hat.STANDARD, Hat.HOMBURG], TraitType.HAT)
+    return random.choice(options)
+
+
 def get_eyes_for_mood(mood: Mood) -> str:
-    if mood == Mood.ANGRY:
-        return "red"
-    else:
-        return "#000000"
+    return "#000000"
 
 
 def get_eyes_for_optic(optic: Optic) -> str:
     if optic == Optic.COOL:
-        return "blue"
+        return "#7DF9FF"
     else:
         return "#000000"
 
 
+def generate_random_optic() -> Optic:
+    options = generate_odds_options(
+        [Optic.STANDARD, Optic.COOL], TraitType.OPTIC)
+    return random.choice(options)
+
+
 def get_cheeks_for_mood(mood: Mood) -> str:
-    if mood == Mood.HAPPY:
-        return "pink"
-    if mood == Mood.SICK:
-        return "#98FB98"
+    if mood == Mood.BLUSH:
+        return "#f7c4c8"
+    elif mood == Mood.ANGRY:
+        return "#CF4339"
+    elif mood == Mood.SICK:
+        return "#e2fee2"
     else:
         return "#FFFFFF"
 
 
 def generate_random_mood() -> Mood:
     options = generate_odds_options([Mood.STANDARD,
-                                    Mood.HAPPY, Mood.ANGRY, Mood.SICK], TraitType.MOOD)
+                                    Mood.BLUSH, Mood.ANGRY, Mood.SICK], TraitType.MOOD)
     return random.choice(options)
 
 
-def generate_random_hat() -> Hat:
-    options = generate_odds_options([Hat.STANDARD, Hat.HOMBURG], TraitType.HAT)
+def get_body_colours(body: Body) -> dict:
+    if body == Body.BEIGE:
+        return {"body": "#faf0e6", "shadow": "#eed9c4"}
+    elif body == Body.BLACK:
+        return {"body": "#b2b2b2", "shadow": "#666666"}
+    else:
+        return {"body": "#FFFFFF", "shadow": "#EEEEEE"}
+
+
+def generate_random_body() -> Optic:
+    options = generate_odds_options(
+        [Body.STANDARD, Body.BEIGE, Body.BLACK], TraitType.BODY)
     return random.choice(options)
 
 
 def generate_random_scarf() -> Scarf:
     options = generate_odds_options(
         [Scarf.STANDARD, Scarf.PONCHO], TraitType.SCARF)
-    return random.choice(options)
-
-
-def generate_random_optic() -> Optic:
-    options = generate_odds_options(
-        [Optic.STANDARD, Optic.COOL], TraitType.OPTIC)
     return random.choice(options)
 
 
@@ -126,7 +142,8 @@ def create_traits() -> Traits:
         mood=generate_random_mood(),
         hat=generate_random_hat(),
         scarf=generate_random_scarf(),
-        optic=generate_random_optic()
+        optic=generate_random_optic(),
+        body=generate_random_body(),
     )
 
 
@@ -134,8 +151,8 @@ def create_palette(traits: Traits) -> Palette:
     scarf_colours = generate_random_scarf_colours()
     has_optics = traits.getoptic() != Optic.STANDARD
     return Palette(
-        body="#FFFFFF",
-        shadow="#EEEEEE",
+        body=get_body_colours(traits.getbody())["body"],
+        shadow=get_body_colours(traits.getbody())["shadow"],
         dark="#000000",
         cheeks=get_cheeks_for_mood(traits.getmood()),
         scarf1=scarf_colours[0],

@@ -49,13 +49,13 @@ class Llama:
         # https://www.dcode.fr/binary-image
 
         # Read Body
-        with open("assets/animals/llama.txt", "r") as f:
+        with open("assets/body/llama.txt", "r") as f:
             for line in f.readlines():
                 line = line.strip().replace("\n", "")
                 self.body.append([int(character) for character in line])
 
          # Read Fix
-        with open("assets/animals/fix.txt", "r") as f:
+        with open("assets/body/fix.txt", "r") as f:
             for line in f.readlines():
                 line = line.strip().replace("\n", "")
                 self.fix.append([int(character) for character in line])

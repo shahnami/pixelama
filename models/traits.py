@@ -6,6 +6,19 @@ class TraitType(Enum):
     OPTIC = 2
     MOOD = 3
     SCARF = 4
+    BODY = 5
+
+
+class Body(Enum):
+    STANDARD = 1
+    BEIGE = 2
+    BLACK = 3
+
+    def __str__(self):
+        return str(self.name)
+
+    def __bytes__(self):
+        return bytes(str(self.name), 'utf-8')
 
 
 class Optic(Enum):
@@ -22,7 +35,7 @@ class Optic(Enum):
 class Mood(Enum):
     STANDARD = 1
     ANGRY = 2
-    HAPPY = 3
+    BLUSH = 3
     SICK = 4
 
     def __str__(self):
@@ -55,11 +68,12 @@ class Scarf(Enum):
 
 
 class Traits:
-    def __init__(self, *, mood: Mood, hat: Hat, scarf: Scarf, optic: Optic):
+    def __init__(self, *, mood: Mood, hat: Hat, scarf: Scarf, optic: Optic, body: Body):
         self.mood = mood
         self.hat = hat
         self.scarf = scarf
         self.optic = optic
+        self.body = body
 
     def getmood(self):
         return self.mood
@@ -73,11 +87,14 @@ class Traits:
     def getscarf(self):
         return self.scarf
 
+    def getbody(self):
+        return self.body
+
     def __eq__(self, other):
-        return self.mood == other.mood and self.scarf == other.scarf and self.hat == other.hat and self.optic == other.optic
+        return self.mood == other.mood and self.scarf == other.scarf and self.hat == other.hat and self.optic == other.optic and self.body == other.body
 
     def __hash__(self):
-        return hash((self.hat, self.mood, self.scarf, self.optic))
+        return hash((self.hat, self.mood, self.scarf, self.optic, self.body))
 
     def __bytes__(self):
-        return bytes(self.hat) + bytes(self.mood) + bytes(self.scarf) + bytes(self.optic)
+        return bytes(self.hat) + bytes(self.mood) + bytes(self.scarf) + bytes(self.optic) + bytes(self.body)
