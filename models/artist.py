@@ -56,7 +56,8 @@ class Artist:
             4: self.configuration.palette.dark,
             5: self.configuration.palette.scarf1,
             6: self.configuration.palette.scarf2,
-            7: self.configuration.palette.eyes
+            7: self.configuration.palette.eyes,
+            8: self.configuration.palette.hat
         }
 
     def backToStart(self):
@@ -70,4 +71,7 @@ class Artist:
         Turtle._pen = newPen
 
     def reset(self):
-        reset()
+        clear()
+
+    def getconfiguration(self):
+        return self.configuration

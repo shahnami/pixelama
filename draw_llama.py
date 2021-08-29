@@ -3,10 +3,33 @@ import sys
 import typing
 import random
 import hashlib
+
+from enum import Enum
+from odds_handler import OddsHandler
 from models.llama import Llama
-from models.traits import Traits, Mood, Hat, Scarf
+from models.traits import Traits, Mood, Hat, Scarf, Optic, TraitType
 from models.palette import Palette
 from models.config import Config
+from models.artist import Artist
+
+
+def get_odds(value: any, trait: TraitType) -> float:
+    handler = OddsHandler()
+    if trait == TraitType.HAT:
+        return handler.odds_for_hat(value)
+    elif trait == TraitType.OPTIC:
+        return handler.odds_for_optic(value)
+    elif trait == TraitType.MOOD:
+        return handler.odds_for_mood(value)
+    elif trait == TraitType.SCARF:
+        return handler.odds_for_scarf(value)
+
+
+def generate_odds_options(options: list, trait: TraitType) -> list:
+    new_options = []
+    for option in options:
+        new_options += [option] * get_odds(option, trait)
+    return new_options
 
 
 def is_unique(llama: Llama) -> bool:
@@ -35,18 +58,56 @@ def generate_random_background() -> str:
     return random.choice(options)
 
 
+def generate_random_hat_colours() -> str:
+    options = [
+        "#000000", "#C19A6B", "#6E260E"
+    ]
+    return random.choice(options)
+
+
+def get_eyes_for_mood(mood: Mood) -> str:
+    if mood == Mood.ANGRY:
+        return "red"
+    else:
+        return "#000000"
+
+
+def get_eyes_for_optic(optic: Optic) -> str:
+    if optic == Optic.COOL:
+        return "blue"
+    else:
+        return "#000000"
+
+
+def get_cheeks_for_mood(mood: Mood) -> str:
+    if mood == Mood.HAPPY:
+        return "pink"
+    if mood == Mood.SICK:
+        return "#98FB98"
+    else:
+        return "#FFFFFF"
+
+
 def generate_random_mood() -> Mood:
-    options = [Mood.STANDARD, Mood.HAPPY, Mood.ANGRY]
+    options = generate_odds_options([Mood.STANDARD,
+                                    Mood.HAPPY, Mood.ANGRY, Mood.SICK], TraitType.MOOD)
     return random.choice(options)
 
 
 def generate_random_hat() -> Hat:
-    options = [Hat.STANDARD, Hat.HOMBURG]
+    options = generate_odds_options([Hat.STANDARD, Hat.HOMBURG], TraitType.HAT)
     return random.choice(options)
 
 
 def generate_random_scarf() -> Scarf:
-    options = [Scarf.STANDARD, Scarf.PONCHO]
+    options = generate_odds_options(
+        [Scarf.STANDARD, Scarf.PONCHO], TraitType.SCARF)
+    return random.choice(options)
+
+
+def generate_random_optic() -> Optic:
+    options = generate_odds_options(
+        [Optic.STANDARD, Optic.COOL], TraitType.OPTIC)
     return random.choice(options)
 
 
@@ -64,57 +125,55 @@ def create_traits() -> Traits:
     return Traits(
         mood=generate_random_mood(),
         hat=generate_random_hat(),
-        scarf=generate_random_scarf()
+        scarf=generate_random_scarf(),
+        optic=generate_random_optic()
     )
 
 
-def create_palette() -> Palette:
+def create_palette(traits: Traits) -> Palette:
     scarf_colours = generate_random_scarf_colours()
-
+    has_optics = traits.getoptic() != Optic.STANDARD
     return Palette(
         body="#FFFFFF",
         shadow="#EEEEEE",
         dark="#000000",
-        cheeks="pink",
+        cheeks=get_cheeks_for_mood(traits.getmood()),
         scarf1=scarf_colours[0],
         scarf2=scarf_colours[1],
-        eyes="red",
+        eyes=has_optics and get_eyes_for_optic(
+            traits.getoptic()) or get_eyes_for_mood(traits.getmood()),
+        hat=generate_random_hat_colours(),
         background=generate_random_background()
     )
 
 
-def create_llama(*, traits: Traits, configuration: Config) -> Llama:
+def create_llama(*, artist: Artist, traits: Traits) -> Llama:
     return Llama(
-        asset_path="assets/animals/llama.txt",
-        traits=traits,
-        configuration=configuration
+        artist=artist,
+        traits=traits
     )
 
 
-def generate_collection(items: int, output: str = ''):
-    for i in range(items):
-        traits = create_traits()
-        palette = create_palette()
-        configuration = Config(pixel_size=20, pen_size=4, palette=palette)
-        llama = create_llama(traits=traits, configuration=configuration)
+def generate_collection(output: str = ''):
+    traits = create_traits()
+    palette = create_palette(traits)
+    configuration = Config(pixel_size=20, pen_size=4, palette=palette)
+    artist = Artist(configuration=configuration)
+    llama = create_llama(artist=artist, traits=traits)
 
-        while not is_unique(llama):
-            traits = create_traits()
-            palette = create_palette()
-            configuration = Config(pixel_size=20, pen_size=4, palette=palette)
-            llama = create_llama(traits=traits, configuration=configuration)
-
-        llama.set_artist()
+    if is_unique(llama):
         store_hash(llama)
-
         if(output):
             llama.save(
                 file_name='assets/output/'+output+'.svg',
-                size=("500px", "800px")
+                size=("1024px", "1024px")
             )
         else:
             llama.draw()
             llama.complete()
+    else:
+        nft_hash = hashlib.sha256(bytes(llama)).hexdigest()
+        print(f"[!] - [Hash already exists] - {nft_hash}")
 
 
 if __name__ == '__main__':
@@ -135,10 +194,10 @@ if __name__ == '__main__':
 
             elif currentArgument in ("-s", "--save"):
                 print("Saving drawing to file:", currentValue)
-                generate_collection(items=1, output=currentValue)
+                generate_collection(output=currentValue)
                 exit(1)
             else:
-                generate_collection(items=1)
+                generate_collection()
 
     except getopt.error as err:
         # output error, and return with an error code
