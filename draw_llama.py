@@ -9,8 +9,8 @@ if __name__ == '__main__':
 
     traits = Traits(
         category=Category.STANDARD,
-        hat=Hat.STANDARD,
-        scarf=Scarf.STANDARD
+        hat=Hat.HOMBURG,
+        scarf=Scarf.PONCHO
     )
 
     palette: Palette = Palette(
@@ -47,7 +47,7 @@ if __name__ == '__main__':
                 print("Saving drawing to file:", currentValue)
                 llama.save(
                     func=llama.draw,
-                    file_name=currentValue+'.svg',
+                    file_name='assets/output/'+currentValue+'.svg',
                     size=("1024px", "1024px")
                 )
                 exit(1)
