@@ -48,7 +48,7 @@ if __name__ == '__main__':
                 llama.save(
                     func=llama.draw,
                     file_name='assets/output/'+currentValue+'.svg',
-                    size=("1024px", "1024px")
+                    size=("500px", "800px")
                 )
                 exit(1)
 
