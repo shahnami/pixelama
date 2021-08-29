@@ -56,7 +56,8 @@ class Artist:
             3: self.configuration.palette.cheeks,
             4: self.configuration.palette.dark,
             5: self.configuration.palette.scarf1,
-            6: self.configuration.palette.scarf2
+            6: self.configuration.palette.scarf2,
+            7: self.configuration.palette.eyes
         }
 
     def backToStart(self):

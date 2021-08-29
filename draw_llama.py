@@ -2,13 +2,13 @@ import getopt
 import sys
 from turtle import *
 from models.llama import Llama
-from models.traits import Traits, Category, Hat, Scarf
+from models.traits import Traits, Face, Hat, Scarf
 from models.palette import Palette
 
 if __name__ == '__main__':
 
     traits = Traits(
-        category=Category.STANDARD,
+        face=Face.HAPPY,
         hat=Hat.HOMBURG,
         scarf=Scarf.PONCHO
     )
@@ -20,6 +20,7 @@ if __name__ == '__main__':
         cheeks="pink",
         scarf1="red",
         scarf2="yellow",
+        eyes="red",
         background="#006400"
     )
 

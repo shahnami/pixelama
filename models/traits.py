@@ -1,10 +1,13 @@
 from enum import Enum
 
 
-class Category(Enum):
-    STANDARD = 1
-    ZOMBIE = 2
-    ALIEN = 3
+class Face(Enum):
+    STANDARD = ""
+    ANGRY = "assets/face/angry.txt"
+    HAPPY = "assets/face/happy.txt"
+
+    def __str__(self):
+        return str(self.value)
 
 
 class Hat(Enum):
@@ -24,7 +27,7 @@ class Scarf(Enum):
 
 
 class Traits:
-    def __init__(self, *, category: Category, hat: Hat, scarf: Scarf):
-        self.category = category
+    def __init__(self, *, face: Face, hat: Hat, scarf: Scarf):
+        self.face = face
         self.hat = hat
         self.scarf = scarf

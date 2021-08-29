@@ -1,6 +1,6 @@
 from models.artist import Artist
 from models.config import Config
-from models.traits import Category, Traits, Hat, Scarf
+from models.traits import Face, Traits, Hat, Scarf
 from models.palette import Palette
 import typing
 
@@ -11,6 +11,7 @@ class Llama:
     fix: list = []
     hat: list = []
     scarf: list = []
+    face: list = []
 
     def __init__(self, *, asset_path: str, traits: Traits, palette: Palette):
         self.artist = Artist(
@@ -20,55 +21,11 @@ class Llama:
         self.populate(asset=asset_path)
 
     def draw(self):
-        self.artist.backToStart()
-        # Draw Body
-        for i in range(0, len(self.body)):
-            for j in range(0, len(self.body[i])):
-                if(self.body[i][j] >= 1):
-                    self.artist.draw_pixel(pixel_value=self.body[i][j])
-                self.artist.move(pixels=1)
-            self.artist.move(pixels=len(self.body[i]), heading=180)
-            self.artist.move(pixels=1, heading=270)
-            self.artist.move(pixels=0, heading=0)
-
-        self.artist.backToStart()
-
-        # Draw fix for leg overlap
-        for i in range(0, len(self.fix)):
-            for j in range(0, len(self.fix[i])):
-                if(self.fix[i][j] >= 1):
-                    self.artist.draw_pixel(
-                        pixel_value=self.fix[i][j], ignore_zero=True)
-                self.artist.move(pixels=1)
-            self.artist.move(pixels=len(self.fix[i]), heading=180)
-            self.artist.move(pixels=1, heading=270)
-            self.artist.move(pixels=0, heading=0)
-
-        self.artist.backToStart()
-
-        # Draw hat
-        for i in range(0, len(self.hat)):
-            for j in range(0, len(self.hat[i])):
-                if(self.hat[i][j] >= 1):
-                    self.artist.draw_pixel(
-                        pixel_value=self.hat[i][j], ignore_zero=True)
-                self.artist.move(pixels=1)
-            self.artist.move(pixels=len(self.hat[i]), heading=180)
-            self.artist.move(pixels=1, heading=270)
-            self.artist.move(pixels=0, heading=0)
-
-        self.artist.backToStart()
-
-        # Draw scarf
-        for i in range(0, len(self.scarf)):
-            for j in range(0, len(self.scarf[i])):
-                if(self.scarf[i][j] >= 1):
-                    self.artist.draw_pixel(
-                        pixel_value=self.scarf[i][j], ignore_zero=True)
-                self.artist.move(pixels=1)
-            self.artist.move(pixels=len(self.scarf[i]), heading=180)
-            self.artist.move(pixels=1, heading=270)
-            self.artist.move(pixels=0, heading=0)
+        self.draw_part(pixels=self.body)
+        self.draw_part(pixels=self.fix, ignore_zero=True)
+        self.draw_part(pixels=self.hat, ignore_zero=True)
+        self.draw_part(pixels=self.scarf, ignore_zero=True)
+        self.draw_part(pixels=self.face, ignore_zero=True)
 
     def complete(self):
         self.artist.complete()
@@ -98,9 +55,28 @@ class Llama:
                     line = line.strip().replace("\n", "")
                     self.hat.append([int(character) for character in line])
 
-         # Read Scarf
+        # Read Scarf
         if self.traits.scarf != Scarf.STANDARD:
             with open(str(self.traits.scarf), "r") as f:
                 for line in f.readlines():
                     line = line.strip().replace("\n", "")
                     self.scarf.append([int(character) for character in line])
+
+        # Read Scarf
+        if self.traits.face != Face.STANDARD:
+            with open(str(self.traits.face), "r") as f:
+                for line in f.readlines():
+                    line = line.strip().replace("\n", "")
+                    self.face.append([int(character) for character in line])
+
+    def draw_part(self, *, pixels: list, ignore_zero: bool = False):
+        self.artist.backToStart()
+        for i in range(0, len(pixels)):
+            for j in range(0, len(pixels[i])):
+                if(pixels[i][j] >= 1):
+                    self.artist.draw_pixel(
+                        pixel_value=pixels[i][j], ignore_zero=ignore_zero)
+                self.artist.move(pixels=1)
+            self.artist.move(pixels=len(pixels[i]), heading=180)
+            self.artist.move(pixels=1, heading=270)
+            self.artist.move(pixels=0, heading=0)
