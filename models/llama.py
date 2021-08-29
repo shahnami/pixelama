@@ -1,8 +1,10 @@
+import typing
+import svgwrite
+
+from models.svg_turtle import SvgTurtle
 from models.artist import Artist
 from models.config import Config
-from models.traits import Face, Traits, Hat, Scarf
-from models.palette import Palette
-import typing
+from models.traits import Mood, Traits, Hat, Scarf
 
 
 class Llama:
@@ -11,27 +13,36 @@ class Llama:
     fix: list = []
     hat: list = []
     scarf: list = []
-    face: list = []
+    mood: list = []
+    configuration: Config
+    artist: Artist
 
-    def __init__(self, *, asset_path: str, traits: Traits, palette: Palette):
-        self.artist = Artist(
-            configuration=Config(pixel_size=20, pen_size=2, palette=palette)
-        )
+    def __init__(self, *, asset_path: str, traits: Traits, configuration: Config):
+        self.configuration = configuration
         self.traits = traits
         self.populate(asset=asset_path)
+
+    def set_artist(self):
+        self.artist = Artist(configuration=self.configuration)
 
     def draw(self):
         self.draw_part(pixels=self.body)
         self.draw_part(pixels=self.fix, ignore_zero=True)
         self.draw_part(pixels=self.hat, ignore_zero=True)
         self.draw_part(pixels=self.scarf, ignore_zero=True)
-        self.draw_part(pixels=self.face, ignore_zero=True)
+        self.draw_part(pixels=self.mood, ignore_zero=True)
 
     def complete(self):
         self.artist.complete()
 
-    def save(self, *, func: any, file_name: str, size: tuple):
-        self.artist.save(func=func, file_name=file_name, size=size)
+    def save(self, *, file_name: str, size: tuple):
+        drawing = svgwrite.Drawing(file_name, size=size)
+        drawing.add(drawing.rect(
+            fill=self.configuration.palette.background, size=("100%", "100%")))
+        t = SvgTurtle(drawing)
+        self.artist.switchToSave(newPen=t, newScreen=t.screen)
+        self.draw()
+        drawing.save()
 
     def populate(self, asset: str):
         # https://www.dcode.fr/binary-image
@@ -62,12 +73,12 @@ class Llama:
                     line = line.strip().replace("\n", "")
                     self.scarf.append([int(character) for character in line])
 
-        # Read Scarf
-        if self.traits.face != Face.STANDARD:
-            with open(str(self.traits.face), "r") as f:
+        # Read mood
+        if self.traits.mood != Mood.STANDARD:
+            with open(str(self.traits.mood), "r") as f:
                 for line in f.readlines():
                     line = line.strip().replace("\n", "")
-                    self.face.append([int(character) for character in line])
+                    self.mood.append([int(character) for character in line])
 
     def draw_part(self, *, pixels: list, ignore_zero: bool = False):
         self.artist.backToStart()
@@ -80,3 +91,12 @@ class Llama:
             self.artist.move(pixels=len(pixels[i]), heading=180)
             self.artist.move(pixels=1, heading=270)
             self.artist.move(pixels=0, heading=0)
+
+    def __eq__(self, other):
+        return self.traits == other.traits and self.configuration.palette == other.configuration.palette
+
+    def __hash__(self):
+        return hash((self.traits, self.configuration.palette))
+
+    def __bytes__(self):
+        return bytes(self.traits) + bytes(self.configuration.palette)
