@@ -1,40 +1,44 @@
-from models.traits import Traits, Mood, Hat, Scarf, Optic, Body
+import random
+from models.traits import Hat, Mood, Optic, Scarf, Skin, TraitType, Traits
 
 
 class OddsHandler:
 
-    def odds_for_hat(self, hat: Hat) -> int:
-        if hat == Hat.HOMBURG:
-            return 5
-        else:
-            return 95
+    hats: list = []
+    skins: list = []
+    scarfs: list = []
+    moods: list = []
+    optics: list = []
 
-    def odds_for_optic(self, optic: Optic) -> int:
-        if optic == Optic.COOL:
-            return 15
-        else:
-            return 85
+    def __init__(self, obj: dict):
+        self.populate(obj)
 
-    def odds_for_mood(self, mood: Mood) -> int:
-        if mood == Mood.ANGRY:
-            return 15
-        elif mood == Mood.BLUSH:
-            return 10
-        elif mood == Mood.SICK:
-            return 15
-        else:
-            return 60
+    def populate(self, obj: dict):
+        for index, (key, value) in enumerate(obj.items()):
+            if key == "hat":
+                for i, (hat, odd) in enumerate(value.items()):
+                    self.hats += [Hat[hat.upper()]] * int((odd * 100))
+            elif key == "optic":
+                for i, (optic, odd) in enumerate(value.items()):
+                    self.optics += [Optic[optic.upper()]] * int((odd * 100))
+            elif key == "mood":
+                for i, (mood, odd) in enumerate(value.items()):
+                    self.moods += [Mood[mood.upper()]] * int((odd * 100))
+            elif key == "scarf":
+                for i, (scarf, odd) in enumerate(value.items()):
+                    self.scarfs += [Scarf[scarf.upper()]] * int((odd * 100))
+            elif key == "skin":
+                for i, (skin, odd) in enumerate(value.items()):
+                    self.skins += [Skin[skin.upper()]] * int((odd * 100))
 
-    def odds_for_scarf(self, scarf: Scarf) -> int:
-        if scarf == Scarf.PONCHO:
-            return 50
-        else:
-            return 50
-
-    def odds_for_body(self, body: Body) -> int:
-        if body == Body.BEIGE:
-            return 1
-        elif body == Body.BLACK:
-            return 14
-        else:
-            return 85
+    def get_random(self, type: TraitType) -> any:
+        if type == TraitType.HAT:
+            return random.choice(self.hats)
+        elif type == TraitType.OPTIC:
+            return random.choice(self.optics)
+        elif type == TraitType.SKIN:
+            return random.choice(self.skins)
+        elif type == TraitType.MOOD:
+            return random.choice(self.moods)
+        elif type == TraitType.SCARF:
+            return random.choice(self.scarfs)

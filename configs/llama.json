@@ -1,0 +1,92 @@
+{
+  "animal": "llama",
+  "configuration": {
+    "pixel_size": 22,
+    "pen_size": 1,
+    "palette": {
+      "light": ["#FFFFFF"],
+      "dark": ["#000000"],
+      "background": [
+        "#379154",
+        "#39B4BF",
+        "#FFE666",
+        "#946FB0",
+        "#E64E67",
+        "#574F8C",
+        "#6F81A6",
+        "#8FBDD9",
+        "#88BABF",
+        "#F2CC85",
+        "#FFCEF6",
+        "#FF599F"
+      ],
+      "hats": ["#000000", "#C19A6B", "#342415"],
+      "scarfs": [
+        "#E80278",
+        "#144EA9",
+        "#FFD601",
+        "#F96524",
+        "#8040A6",
+        "#7D1335",
+        "#B6395D",
+        "#241026",
+        "#9F8D66",
+        "#34FAAB",
+        "#32F0D9",
+        "#DCDCDC"
+      ],
+      "eyes": ["#000000"],
+      "optics": {
+        "default": ["#000000"],
+        "cool": ["#144EA9"]
+      },
+      "mood": {
+        "default": ["#FFFFFF"],
+        "angry": ["#CF4339"],
+        "blush": ["#f7c4c8"],
+        "sick": ["#e2fee2"]
+      },
+      "skin": {
+        "default": {
+          "skin": ["#FFFFFF"],
+          "shadow": ["#EEEEEE"]
+        },
+        "beige": {
+          "skin": ["#faf0e6"],
+          "shadow": ["#eed9c4"]
+        },
+        "black": {
+          "skin": ["#b2b2b2"],
+          "shadow": ["#8E8E8E"]
+        }
+      }
+    }
+  },
+  "odds": {
+    "hat": {
+      "default": 0.95,
+      "homburg": 0.05
+    },
+    "optic": {
+      "default": 0.85,
+      "cool": 0.15
+    },
+    "mood": {
+      "default": 0.6,
+      "angry": 0.15,
+      "blush": 0.1,
+      "sick": 0.15
+    },
+    "scarf": {
+      "default": 0.5,
+      "tie": 0.1,
+      "bowtie": 0.1,
+      "poncho": 0.3
+    },
+    "skin": {
+      "default": 0.85,
+      "black": 0.14,
+      "beige": 0.01
+    }
+  }
+}

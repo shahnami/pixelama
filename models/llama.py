@@ -4,12 +4,12 @@ import svgwrite
 from models.svg_turtle import SvgTurtle
 from models.artist import Artist
 from models.config import Config
-from models.traits import Mood, Traits, Hat, Scarf, Optic
+from models.traits import Mood, Traits, Hat, Scarf, Optic, Skin
 
 
 class Llama:
 
-    body: list = []
+    skin: list = []
     fix: list = []
     hat: list = []
     scarf: list = []
@@ -23,7 +23,7 @@ class Llama:
         self.populate()
 
     def draw(self):
-        self.draw_part(pixels=self.body)
+        self.draw_part(pixels=self.skin)
         self.draw_part(pixels=self.fix, ignore_zero=True)
         self.draw_part(pixels=self.hat, ignore_zero=True)
         self.draw_part(pixels=self.scarf, ignore_zero=True)
@@ -48,42 +48,42 @@ class Llama:
     def populate(self):
         # https://www.dcode.fr/binary-image
 
-        # Read Body
-        with open("assets/body/llama.txt", "r") as f:
+        # Read Skin
+        with open(str(self.traits.skin.value), "r") as f:
             for line in f.readlines():
                 line = line.strip().replace("\n", "")
-                self.body.append([int(character) for character in line])
+                self.skin.append([int(character) for character in line])
 
          # Read Fix
-        with open("assets/body/fix.txt", "r") as f:
+        with open("assets/skins/fix.txt", "r") as f:
             for line in f.readlines():
                 line = line.strip().replace("\n", "")
                 self.fix.append([int(character) for character in line])
 
         # Read Hat
-        if self.traits.hat != Hat.STANDARD:
-            with open("assets/hats/default.txt", "r") as f:
+        if self.traits.hat != Hat.DEFAULT:
+            with open(str(self.traits.hat.value), "r") as f:
                 for line in f.readlines():
                     line = line.strip().replace("\n", "")
                     self.hat.append([int(character) for character in line])
 
         # Read Scarf
-        if self.traits.scarf != Scarf.STANDARD:
-            with open("assets/scarfs/default.txt", "r") as f:
+        if self.traits.scarf != Scarf.DEFAULT:
+            with open(str(self.traits.scarf.value), "r") as f:
                 for line in f.readlines():
                     line = line.strip().replace("\n", "")
                     self.scarf.append([int(character) for character in line])
 
         # Read mood
-        if self.traits.mood != Mood.STANDARD:
-            with open("assets/mood/default.txt", "r") as f:
+        if self.traits.mood != Mood.DEFAULT:
+            with open(str(self.traits.mood.value), "r") as f:
                 for line in f.readlines():
                     line = line.strip().replace("\n", "")
                     self.mood.append([int(character) for character in line])
 
         # Read optic
-        if self.traits.optic != Optic.STANDARD:
-            with open("assets/optics/default.txt", "r") as f:
+        if self.traits.optic != Optic.DEFAULT:
+            with open(str(self.traits.optic.value), "r") as f:
                 for line in f.readlines():
                     line = line.strip().replace("\n", "")
                     self.optic.append([int(character) for character in line])

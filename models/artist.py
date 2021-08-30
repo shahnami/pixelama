@@ -50,7 +50,7 @@ class Artist:
     def createMapping(self):
         self.mapping = {
             0: self.configuration.palette.background,
-            1: self.configuration.palette.body,
+            1: self.configuration.palette.skin,
             2: self.configuration.palette.shadow,
             3: self.configuration.palette.cheeks,
             4: self.configuration.palette.dark,

@@ -9,5 +9,5 @@ read name
 
 for i in $( eval echo {1..$items} )
 do
-	python3 draw_llama.py --save $name-$i
+	python3 main.py --save $name-$i
 done
