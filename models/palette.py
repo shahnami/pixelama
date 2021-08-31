@@ -21,8 +21,5 @@ class Palette:
             self.background == other.background and \
             self.hat == other.hat
 
-    def __hash__(self):
-        return hash((self.skin, self.shadow, self.dark, self.cheeks, self.scarf1, self.scarf2, self.eyes, self.hat, self.background))
-
     def __bytes__(self):
         return bytes(self.skin, 'utf-8') + bytes(self.shadow, 'utf-8') + bytes(self.dark, 'utf-8') + bytes(self.cheeks, 'utf-8') + bytes(self.scarf1, 'utf-8') + bytes(self.scarf2, 'utf-8') + bytes(self.eyes, 'utf-8') + bytes(self.hat, 'utf-8') + bytes(self.background, 'utf-8')

@@ -1,5 +1,6 @@
 {
   "animal": "llama",
+  "assets": "assets/artwork/llama/",
   "configuration": {
     "pixel_size": 22,
     "pen_size": 1,
