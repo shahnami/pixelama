@@ -10,18 +10,22 @@ from models.properties.property import Property
 
 
 class ArtWork:
+    """
+        An ArtWork is an abstract class that defines a piece of Art
+    """
 
     artist: Artist
     properties: [Property]
 
     def __init__(self, *, artist: Artist, properties: [Property]):
         self.artist = artist
-        self.properties = properties
+        self.properties = sorted(
+            properties, key=lambda x: x.layer, reverse=False)
         self.populate()
 
     def draw(self):
-        raise NotImplementedError(
-            f"The draw functionality has not been implemented for {self.__class__.__name__}.")
+        for prop in self.properties:
+            self.draw_part(prop=prop)
 
     def get_property(self, name: str) -> Property:
         for prop in self.properties:
@@ -46,20 +50,23 @@ class ArtWork:
     def populate(self, *, ignore_props: list = []):
         for prop in self.properties:
             if prop.name not in ignore_props:
-                if prop.value != None:
-                    with open(str(prop.value), "r") as f:
+                if prop.value != "default":
+                    with open(str(prop.asset), "r") as f:
                         for line in f.readlines():
                             line = line.strip().replace("\n", "")
                             prop.setpixel([int(character)
                                           for character in line])
 
-    def draw_part(self, *, pixels: list, ignore_zero: bool = False):
+    def draw_part(self, *, prop: Property):
         self.artist.backToStart()
+        pixels = prop.getpixels()
         for i in range(0, len(pixels)):
             for j in range(0, len(pixels[i])):
                 if(pixels[i][j] >= 1):
-                    self.artist.draw_pixel(
-                        pixel_value=pixels[i][j], ignore_zero=ignore_zero)
+                    print(self.artist.getconfiguration().getpalette(
+                    ).get_random_colour(name=prop.getname(), value=prop.getvalue()))
+                    self.artist.draw_pixel(colour=self.artist.getconfiguration(
+                    ).getpalette().get_random_colour(prop.getname(), prop.getvalue()))
                 self.artist.move(pixels=1)
             self.artist.move(pixels=len(pixels[i]), heading=180)
             self.artist.move(pixels=1, heading=270)

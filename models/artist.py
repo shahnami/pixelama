@@ -7,13 +7,11 @@ from models.config import Config
 class Artist:
 
     configuration: Config
-    mapping: dict
 
     def __init__(self, *, configuration: Config):
         self.screen = Screen()
         self.configuration = configuration
-        self.createMapping()
-        self.screen.bgcolor(self.configuration.palette.background)
+        self.screen.bgcolor(self.configuration.getpalette().background)
 
         setheading(0)
         speed(0)
@@ -24,12 +22,10 @@ class Artist:
         pendown()
         self.screen.tracer(False)
 
-    def draw_pixel(self, *, pixel_value: int, ignore_zero: bool = False):
-        if(ignore_zero and pixel_value == 0):
-            return
+    def draw_pixel(self, *, colour: str):
         pendown()
         pensize(self.configuration.pen_size)
-        color(self.mapping[pixel_value])
+        color(colour)
         begin_fill()
         for x in range(4):
             forward(self.configuration.pixel_size)
@@ -46,19 +42,6 @@ class Artist:
     def complete(self):
         hideturtle()
         self.screen.exitonclick()
-
-    def createMapping(self):
-        self.mapping = {
-            0: self.configuration.palette.background,
-            1: self.configuration.palette.skin,
-            2: self.configuration.palette.shadow,
-            3: self.configuration.palette.cheeks,
-            4: self.configuration.palette.dark,
-            5: self.configuration.palette.scarf1,
-            6: self.configuration.palette.scarf2,
-            7: self.configuration.palette.eyes,
-            8: self.configuration.palette.hat
-        }
 
     def backToStart(self):
         penup()

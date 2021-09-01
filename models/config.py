@@ -1,4 +1,4 @@
-from models.palette import Palette
+from models.palettes.palette import Palette
 
 
 class Config:
@@ -6,3 +6,6 @@ class Config:
         self.pixel_size = pixel_size
         self.pen_size = pen_size
         self.palette = palette
+
+    def getpalette(self):
+        return self.palette

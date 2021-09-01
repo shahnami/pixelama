@@ -4,90 +4,300 @@
   "configuration": {
     "pixel_size": 22,
     "pen_size": 1,
-    "palette": {
-      "light": ["#FFFFFF"],
-      "dark": ["#000000"],
-      "background": [
-        "#379154",
-        "#39B4BF",
-        "#FFE666",
-        "#946FB0",
-        "#E64E67",
-        "#574F8C",
-        "#6F81A6",
-        "#8FBDD9",
-        "#88BABF",
-        "#F2CC85",
-        "#FFCEF6",
-        "#FF599F"
-      ],
-      "hats": ["#000000", "#C19A6B", "#342415"],
-      "scarfs": [
-        "#E80278",
-        "#144EA9",
-        "#FFD601",
-        "#F96524",
-        "#8040A6",
-        "#7D1335",
-        "#B6395D",
-        "#241026",
-        "#9F8D66",
-        "#34FAAB",
-        "#32F0D9",
-        "#DCDCDC"
-      ],
-      "eyes": ["#000000"],
-      "optics": {
-        "default": ["#000000"],
-        "cool": ["#144EA9"]
-      },
-      "mood": {
-        "default": ["#FFFFFF"],
-        "angry": ["#CF4339"],
-        "blush": ["#f7c4c8"],
-        "sick": ["#e2fee2"]
+    "primary": ["#FFFFFF"],
+    "secondary": ["#000000"],
+    "background": [
+      "#379154",
+      "#39B4BF",
+      "#FFE666",
+      "#946FB0",
+      "#E64E67",
+      "#574F8C",
+      "#6F81A6",
+      "#8FBDD9",
+      "#88BABF",
+      "#F2CC85",
+      "#FFCEF6",
+      "#FF599F"
+    ],
+    "properties": {
+      "scarfs": {
+        "default": {
+          "asset": "",
+          "odds": 0.5,
+          "layer": 4,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#FFFFFF"]
+            }
+          }
+        },
+        "poncho": {
+          "asset": "assets/artwork/llama/scarfs/poncho.txt",
+          "odds": 0.5,
+          "layer": 4,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": [
+                "#E80278",
+                "#144EA9",
+                "#FFD601",
+                "#F96524",
+                "#8040A6",
+                "#7D1335",
+                "#B6395D",
+                "#241026",
+                "#9F8D66",
+                "#34FAAB",
+                "#32F0D9",
+                "#DCDCDC"
+              ]
+            },
+            "secondary": {
+              "pixel": 2,
+              "hex": [
+                "#E80278",
+                "#144EA9",
+                "#FFD601",
+                "#F96524",
+                "#8040A6",
+                "#7D1335",
+                "#B6395D",
+                "#241026",
+                "#9F8D66",
+                "#34FAAB",
+                "#32F0D9",
+                "#DCDCDC"
+              ]
+            }
+          }
+        },
+        "bowtie": {
+          "asset": "assets/artwork/llama/scarfs/bowtie.txt",
+          "odds": 0.1,
+          "layer": 4,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": [
+                "#E80278",
+                "#144EA9",
+                "#FFD601",
+                "#F96524",
+                "#8040A6",
+                "#7D1335",
+                "#B6395D",
+                "#241026",
+                "#9F8D66",
+                "#34FAAB",
+                "#32F0D9",
+                "#DCDCDC"
+              ]
+            },
+            "secondary": {
+              "pixel": 2,
+              "hex": [
+                "#E80278",
+                "#144EA9",
+                "#FFD601",
+                "#F96524",
+                "#8040A6",
+                "#7D1335",
+                "#B6395D",
+                "#241026",
+                "#9F8D66",
+                "#34FAAB",
+                "#32F0D9",
+                "#DCDCDC"
+              ]
+            }
+          }
+        },
+        "tie": {
+          "asset": "assets/artwork/llama/scarfs/tie.txt",
+          "odds": 0.1,
+          "layer": 4,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": [
+                "#E80278",
+                "#144EA9",
+                "#FFD601",
+                "#F96524",
+                "#8040A6",
+                "#7D1335",
+                "#B6395D",
+                "#241026",
+                "#9F8D66",
+                "#34FAAB",
+                "#32F0D9",
+                "#DCDCDC"
+              ]
+            },
+            "secondary": {
+              "pixel": 2,
+              "hex": [
+                "#E80278",
+                "#144EA9",
+                "#FFD601",
+                "#F96524",
+                "#8040A6",
+                "#7D1335",
+                "#B6395D",
+                "#241026",
+                "#9F8D66",
+                "#34FAAB",
+                "#32F0D9",
+                "#DCDCDC"
+              ]
+            }
+          }
+        }
       },
       "skin": {
         "default": {
-          "skin": ["#FFFFFF"],
-          "shadow": ["#EEEEEE"]
+          "asset": "assets/artwork/llama/skins/default.txt",
+          "odds": 0.85,
+          "layer": 0,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#FFFFFF"]
+            },
+            "secondary": {
+              "pixel": 2,
+              "hex": ["#EEEEEE"]
+            }
+          }
         },
         "beige": {
-          "skin": ["#faf0e6"],
-          "shadow": ["#eed9c4"]
+          "asset": "assets/artwork/llama/skins/beige.txt",
+          "odds": 0.01,
+          "layer": 0,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#faf0e6"]
+            },
+            "secondary": {
+              "pixel": 2,
+              "hex": ["#eed9c4"]
+            }
+          }
         },
         "black": {
-          "skin": ["#b2b2b2"],
-          "shadow": ["#8E8E8E"]
+          "asset": "assets/artwork/llama/skins/black.txt",
+          "odds": 0.14,
+          "layer": 0,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#b2b2b2"]
+            },
+            "secondary": {
+              "pixel": 2,
+              "hex": ["#8E8E8E"]
+            }
+          }
+        }
+      },
+      "hat": {
+        "default": {
+          "asset": "",
+          "odds": 0.95,
+          "layer": 2,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#FFFFFF"]
+            }
+          }
+        },
+        "homburg": {
+          "asset": "assets/artwork/llama/hats/homburg.txt",
+          "odds": 0.05,
+          "layer": 1,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#000000", "#C19A6B", "#342415"]
+            }
+          }
+        }
+      },
+      "mood": {
+        "default": {
+          "asset": "",
+          "odds": 0.6,
+          "layer": 2,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#FFFFFF"]
+            }
+          }
+        },
+        "angry": {
+          "asset": "assets/artwork/llama/moods/angry.txt",
+          "odds": 0.15,
+          "layer": 2,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#CF4339"]
+            }
+          }
+        },
+        "blush": {
+          "asset": "assets/artwork/llama/moods/blush.txt",
+          "odds": 0.1,
+          "layer": 2,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#f7c4c8"]
+            }
+          }
+        },
+        "sick": {
+          "asset": "assets/artwork/llama/moods/sick.txt",
+          "odds": 0.15,
+          "layer": 2,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#e2fee2"]
+            }
+          }
+        }
+      },
+      "optic": {
+        "default": {
+          "asset": "assets/artwork/llama/optics/default.txt",
+          "odds": 0.85,
+          "layer": 3,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#000000"]
+            }
+          }
+        },
+        "cool": {
+          "asset": "assets/artwork/llama/optics/cool.txt",
+          "odds": 0.15,
+          "layer": 3,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#144EA9"]
+            }
+          }
         }
       }
-    }
-  },
-  "odds": {
-    "hat": {
-      "default": 0.95,
-      "homburg": 0.05
-    },
-    "optic": {
-      "default": 0.85,
-      "cool": 0.15
-    },
-    "mood": {
-      "default": 0.6,
-      "angry": 0.15,
-      "blush": 0.1,
-      "sick": 0.15
-    },
-    "scarf": {
-      "default": 0.5,
-      "tie": 0.1,
-      "bowtie": 0.1,
-      "poncho": 0.3
-    },
-    "skin": {
-      "default": 0.85,
-      "black": 0.14,
-      "beige": 0.01
     }
   }
 }
