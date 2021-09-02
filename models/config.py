@@ -1,4 +1,4 @@
-from models.palettes.palette import Palette
+from models.palettes import Palette
 
 
 class Config:

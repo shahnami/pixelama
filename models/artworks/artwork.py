@@ -5,14 +5,14 @@ import hashlib
 from typing import Union
 from models.svg_turtle import SvgTurtle
 from models.artist import Artist
-from models.properties.property import Property
-from models.properties.properties import Properties
-from models.palettes.colour import Colour
+from models.properties import Property, Properties
+from models.palettes import Colour
 
 
 class ArtWork:
     """
         An ArtWork is an abstract class that defines a piece of Art
+        This class should be extended for every individual ArtWork
     """
 
     artist: Artist

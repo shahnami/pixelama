@@ -1,8 +1,6 @@
 from models.artist import Artist
-from models.artworks.artwork import ArtWork
-from models.properties.properties import Properties
-from models.properties.property import Property
-from models.palettes.colour import Colour
+from models.artworks import ArtWork
+from models.properties import Properties, Property
 
 
 class Llama(ArtWork):

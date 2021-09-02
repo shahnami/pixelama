@@ -1,13 +1,10 @@
 import json
-import typing
-import random
 
-from models.palettes.palette import Palette
-from models.properties.properties import Properties
+from models.palettes import Palette
+from models.properties import Properties
 from models.config import Config
 from models.artist import Artist
-from models.artworks.artwork import ArtWork
-from models.artworks.llama import Llama
+from models.artworks import ArtWork
 
 
 class Parser:

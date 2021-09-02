@@ -1,4 +1,4 @@
-from models.artworks.llama import Llama
+from models.artworks import Llama
 from parser import Parser
 
 if __name__ == '__main__':

@@ -1,5 +1,3 @@
-import typing
-
 from turtle import *
 from models.config import Config
 

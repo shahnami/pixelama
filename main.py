@@ -1,6 +1,4 @@
-import getopt
-import sys
-import typing
+import argparse
 import hashlib
 
 from parser import Parser
@@ -23,80 +21,61 @@ def store_hash(llama: Llama):
         f.write(hashlib.sha256(bytes(llama)).hexdigest() + "\n")
 
 
-def generate(*, file_name: str, is_demo: bool = False):
+def generate(*, config_path: str, class_type: ArtWork, file_name: str, is_demo: bool = False):
     print(f"[ℹ] Generating...")
-    parser = Parser(path="configs/llama.json")
-    llama = parser.parse()
 
-    if is_unique(llama):
-        not is_demo and store_hash(llama)
+    parser = Parser(path=config_path, class_type=class_type)
+    art = parser.parse()
+
+    if not is_demo and is_unique(art):
+        store_hash(art)
         if(file_name):
-            llama.save(
+            art.save(
                 file_name='assets/collections/'+file_name+'.svg',
                 size=("1024px", "1024px")
             )
             print(
                 f"[✓] Saved file to {'assets/collections/'+file_name+'.svg'}")
         else:
-            llama.draw()
-            llama.complete()
+            art.draw()
+            art.complete()
+    elif is_demo:
+        print(f"[ℹ] This is for demo purposes only, and will not store the hash.")
+        if(file_name):
+            art.save(
+                file_name='assets/collections/demo/'+file_name+'.svg',
+                size=("1024px", "1024px")
+            )
+            print(
+                f"[✓] Saved file to {'assets/collections/demo/'+file_name+'.svg'}")
+        else:
+            art.draw()
+            art.complete()
     else:
-        nft_hash = hashlib.sha256(bytes(llama)).hexdigest()
+        nft_hash = hashlib.sha256(bytes(art)).hexdigest()
         print(f"[✘] Duplicate Hash - {nft_hash}")
 
 
-def demo():
-    print(f"[ℹ] This is for demo purposes only, and will not store the hash.")
-    generate(file_name="demo", is_demo=True)
-
-    # traits = Traits(
-    #     mood=Mood.DEFAULT,
-    #     hat=Hat.DEFAULT,
-    #     scarf=Scarf.BOWTIE,
-    #     optic=Optic.DEFAULT,
-    #     skin=Skin.DEFAULT,
-    # )
-
-    # palette = Palette(
-    #     skin="#FFFFFF",
-    #     shadow="#EEEEEE",
-    #     dark="#000000",
-    #     cheeks="#FFFFFF",
-    #     scarf1="black",
-    #     scarf2="gray",
-    #     eyes="black",
-    #     hat="black",
-    #     background="#8FBDD9"
-    # )
-
-    # configuration = Config(pixel_size=22, pen_size=1, palette=palette)
-    # artist = Artist(configuration=configuration)
-    # llama = Llama(artist=artist, traits=traits)
-
-    # llama.draw()
-    # llama.complete()
-
-
 if __name__ == '__main__':
-    argumentList = sys.argv[1:]
-    options = "hds:"
-    long_options = ["help", "demo", "save="]
-
     try:
-        # Parsing argument
-        arguments, values = getopt.getopt(argumentList, options, long_options)
+        parser = argparse.ArgumentParser(description='Generate Pixelated Art')
 
-        # checking each argument
-        for currentArgument, currentValue in arguments:
-            if currentArgument in ("-h", "--help"):
-                print("[ℹ] Your options are: --help, --demo and --save <file_name>")
-            elif currentArgument in ("-d", "--demo"):
-                demo()
-            elif currentArgument in ("-s", "--save"):
-                generate(file_name=currentValue)
-                exit(1)
+        parser.add_argument(
+            '-o', '--output', help='Path to save the output image', type=str)
+        parser.add_argument(
+            '-c', '--config', help='Path to the configuration file', type=str)
+        parser.add_argument('-t', '--type', help='Class Type')
+        parser.add_argument(
+            '-d', '--demo', help='Execute a demo version of the script', action='store_true')
 
-    except getopt.error as err:
+        args = parser.parse_args()
+
+        if args.config and args.type:
+            generate(config_path=args.config, class_type=eval(args.type),
+                     file_name=args.output or "", is_demo=args.demo or False)
+        else:
+            print(
+                "[✘] Arguments --config and --type were not provided. Use -h for more information.")
+    except:
         # output error, and return with an error code
-        print(str(err))
         exit(0)
