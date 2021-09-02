@@ -74,8 +74,8 @@ class ArtWork:
     def __eq__(self, other):
         return self.properties == other.properties and self.artist.getconfiguration().palette == other.artist.getconfiguration().palette
 
-    def __hash__(self):
+    def hash(self):
         return hashlib.sha256(bytes(self)).hexdigest()
 
     def __bytes__(self):
-        return bytes(self.properties) + bytes(self.artist.getconfiguration().palette)
+        return bytes(self.artist.getconfiguration().palette)

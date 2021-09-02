@@ -18,5 +18,5 @@ read name
 
 for i in $( eval echo {1..$items} )
 do
-	python3 main.py --type class_type --config config_file --save $name-$i
+	python3 main.py --type $class_type --config $config_file --output $name-$i
 done

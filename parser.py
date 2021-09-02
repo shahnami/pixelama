@@ -27,7 +27,7 @@ class Parser:
         print(f"[ℹ] Initialising Properties Object")
 
         properties = Properties(
-            configuration=obj['properties']).get_random_set_of_properties()
+            configuration=obj['properties']).get_selected_properties()
 
         print(f"[ℹ] Initialising Palette")
         palette = Palette(properties=properties,

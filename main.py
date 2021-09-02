@@ -5,8 +5,8 @@ from parser import Parser
 from models import *
 
 
-def is_unique(llama: Llama) -> bool:
-    hash_to_check = hashlib.sha256(bytes(llama)).hexdigest()
+def is_unique(art: ArtWork) -> bool:
+    hash_to_check = art.hash()
     with open("assets/hashes/hashes.txt", "r") as f:
         lines = f.readlines()
         for line in lines:
@@ -16,44 +16,46 @@ def is_unique(llama: Llama) -> bool:
         return True
 
 
-def store_hash(llama: Llama):
+def store_hash(art: ArtWork):
     with open("assets/hashes/hashes.txt", "a") as f:
-        f.write(hashlib.sha256(bytes(llama)).hexdigest() + "\n")
+        f.write(hashlib.sha256(bytes(art)).hexdigest() + "\n")
 
 
 def generate(*, config_path: str, class_type: ArtWork, file_name: str, is_demo: bool = False):
-    print(f"[ℹ] Generating...")
+    try:
+        print(f"[ℹ] Generating...")
 
-    parser = Parser(path=config_path, class_type=class_type)
-    art = parser.parse()
-
-    if not is_demo and is_unique(art):
-        store_hash(art)
-        if(file_name):
-            art.save(
-                file_name='assets/collections/'+file_name+'.svg',
-                size=("1024px", "1024px")
-            )
-            print(
-                f"[✓] Saved file to {'assets/collections/'+file_name+'.svg'}")
+        parser = Parser(path=config_path, class_type=class_type)
+        art = parser.parse()
+        if not is_demo and is_unique(art):
+            store_hash(art)
+            if(file_name):
+                art.save(
+                    file_name='assets/collections/'+file_name+'.svg',
+                    size=("1024px", "1024px")
+                )
+                print(
+                    f"[✓] Saved file to {'assets/collections/'+file_name+'.svg'}")
+            else:
+                art.draw()
+                art.complete()
+        elif is_demo:
+            print(f"[ℹ] This is for demo purposes only, and will not store the hash.")
+            if(file_name):
+                art.save(
+                    file_name='assets/collections/demo/'+file_name+'.svg',
+                    size=("1024px", "1024px")
+                )
+                print(
+                    f"[✓] Saved file to {'assets/collections/demo/'+file_name+'.svg'}")
+            else:
+                art.draw()
+                art.complete()
         else:
-            art.draw()
-            art.complete()
-    elif is_demo:
-        print(f"[ℹ] This is for demo purposes only, and will not store the hash.")
-        if(file_name):
-            art.save(
-                file_name='assets/collections/demo/'+file_name+'.svg',
-                size=("1024px", "1024px")
-            )
-            print(
-                f"[✓] Saved file to {'assets/collections/demo/'+file_name+'.svg'}")
-        else:
-            art.draw()
-            art.complete()
-    else:
-        nft_hash = hashlib.sha256(bytes(art)).hexdigest()
-        print(f"[✘] Duplicate Hash - {nft_hash}")
+            nft_hash = hashlib.sha256(bytes(art)).hexdigest()
+            print(f"[✘] Duplicate Hash - {nft_hash}")
+    except Exception as e:
+        print(f"[✘] Error Occurred. {e}")
 
 
 if __name__ == '__main__':

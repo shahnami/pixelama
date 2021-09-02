@@ -26,9 +26,11 @@ class Palette:
                     name=prop.getname(), pixel_value=cvalue["pixel"], hex_value=random.choice(cvalue["hex"])))
 
     def __bytes__(self):
-        bytes_string = ''
-        for colour in self.palette:
-            bytes_string += bytes(colour.hex, 'utf-8')
+        bytes_string = bytes(self.primary, "utf-8") + bytes(self.secondary,
+                                                            "utf-8") + bytes(self.background, "utf-8")
+        for _, (name, colour) in enumerate(self.colours.items()):
+            bytes_string += bytes(name, 'utf-8') + \
+                bytes(list(colour.keys())[0], 'utf-8')
         return bytes_string
 
     def get_colour(self, *, prop: Property, pixel_value: int):
