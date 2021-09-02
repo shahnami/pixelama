@@ -1,12 +1,13 @@
-import typing
+
 import svgwrite
 import hashlib
 
+from typing import Union
 from models.svg_turtle import SvgTurtle
 from models.artist import Artist
-from models.config import Config
-from models.traits import Mood, Traits, Hat, Scarf, Optic, Skin
 from models.properties.property import Property
+from models.properties.properties import Properties
+from models.palettes.colour import Colour
 
 
 class ArtWork:
@@ -15,22 +16,17 @@ class ArtWork:
     """
 
     artist: Artist
-    properties: [Property]
+    properties: Properties
 
-    def __init__(self, *, artist: Artist, properties: [Property]):
+    def __init__(self, *, artist: Artist, properties: Properties):
         self.artist = artist
         self.properties = sorted(
-            properties, key=lambda x: x.layer, reverse=False)
+            properties.items(), key=lambda x: x[1].layer, reverse=False)
         self.populate()
 
     def draw(self):
-        for prop in self.properties:
+        for _, (_, prop) in enumerate(self.properties):
             self.draw_part(prop=prop)
-
-    def get_property(self, name: str) -> Property:
-        for prop in self.properties:
-            if prop.name == name:
-                return prop
 
     def complete(self):
         self.artist.complete()
@@ -48,25 +44,28 @@ class ArtWork:
         drawing.save()
 
     def populate(self, *, ignore_props: list = []):
-        for prop in self.properties:
+        for _, (_, prop) in enumerate(self.properties):
             if prop.name not in ignore_props:
-                if prop.value != "default":
+                if prop.asset != "":
                     with open(str(prop.asset), "r") as f:
                         for line in f.readlines():
                             line = line.strip().replace("\n", "")
                             prop.setpixel([int(character)
                                           for character in line])
 
-    def draw_part(self, *, prop: Property):
+    def draw_part(self, *, prop: Property, custom_colour: Union[Colour, None] = None):
         self.artist.backToStart()
         pixels = prop.getpixels()
         for i in range(0, len(pixels)):
             for j in range(0, len(pixels[i])):
                 if(pixels[i][j] >= 1):
-                    print(self.artist.getconfiguration().getpalette(
-                    ).get_random_colour(name=prop.getname(), value=prop.getvalue()))
-                    self.artist.draw_pixel(colour=self.artist.getconfiguration(
-                    ).getpalette().get_random_colour(prop.getname(), prop.getvalue()))
+                    if not custom_colour:
+                        colour = self.artist.getconfiguration().getpalette(
+                        ).get_colour(prop=prop, pixel_value=pixels[i][j])
+                    else:
+                        colour = custom_colour
+                    if(colour):
+                        self.artist.draw_pixel(colour=colour)
                 self.artist.move(pixels=1)
             self.artist.move(pixels=len(pixels[i]), heading=180)
             self.artist.move(pixels=1, heading=270)

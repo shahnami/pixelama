@@ -25,6 +25,12 @@ class Properties:
                 list_of_odds += [prop] * int(v["odds"] * 100)
             self.random_properties[prop_key] = list_of_odds
 
+    def get_random_set_of_properties(self) -> dict:
+        traits = {}
+        for i, (k, v) in enumerate(self.random_properties.items()):
+            traits.update({k: self.get_random_property(key=k)})
+        return traits
+
     def get_random_property(self, *, key: str, k: int = 1):
         if k > 1:
             return random.choices(self.random_properties[key], k=k)

@@ -1,6 +1,3 @@
-import typing
-
-
 class Property:
     """ 
         This abstract class defines a Property within an ArtWork
@@ -42,7 +39,7 @@ class Property:
         self.pixels.append(value)
 
     def __eq__(self, other):
-        return self.name != other.name and self.value != other.value
+        return self.name != other.name and self.value != other.value and self.asset != other.asset and self.pixels != other.pixels
 
     def __bytes__(self):
         return bytes(str(self), 'utf-8')
