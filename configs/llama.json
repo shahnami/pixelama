@@ -2,6 +2,8 @@
   "animal": "llama",
   "assets": "assets/artwork/llama/",
   "configuration": {
+    "rows": 37,
+    "cols": 37,
     "pixel_size": 22,
     "pen_size": 1,
     "primary": ["#FFFFFF"],

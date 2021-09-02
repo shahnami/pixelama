@@ -9,15 +9,12 @@ class Artist:
     def __init__(self, *, configuration: Config):
         self.screen = Screen()
         self.configuration = configuration
+
         self.screen.bgcolor(self.configuration.getpalette().background)
 
         setheading(0)
         speed(0)
-        penup()
 
-        goto(self.configuration.pen_size/2 - self.screen.window_width()/2,
-             self.screen.window_height()/2 - self.configuration.pen_size/2)
-        pendown()
         self.screen.tracer(False)
 
     def draw_pixel(self, *, colour: str):
@@ -43,8 +40,8 @@ class Artist:
 
     def backToStart(self):
         penup()
-        goto(self.configuration.pen_size/2 - Screen().window_width()/2,
-             Screen().window_height()/2 - self.configuration.pen_size/2)
+        goto((-self.configuration.rows * self.configuration.pixel_size) / 2 - self.configuration.pixel_size * 4,
+             (self.configuration.cols * self.configuration.pixel_size) / 2 - self.configuration.pixel_size/2)
         pendown()
 
     def switchToSave(self, *, newPen: any, newScreen: any):

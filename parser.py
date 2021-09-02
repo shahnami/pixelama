@@ -34,8 +34,13 @@ class Parser:
                           configuration=obj)
         print(f"[✓] Generated Palette")
 
-        config = Config(pixel_size=obj["pixel_size"],
-                        pen_size=obj["pen_size"], palette=palette)
+        config = Config(
+            pixel_size=obj["pixel_size"],
+            pen_size=obj["pen_size"],
+            palette=palette,
+            rows=obj["rows"],
+            cols=obj["cols"]
+        )
 
         artist = Artist(configuration=config)
 
