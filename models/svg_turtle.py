@@ -1,5 +1,5 @@
-from collections import namedtuple
 import re
+from collections import namedtuple
 from turtle import TNavigator, TPen
 
 import svgwrite

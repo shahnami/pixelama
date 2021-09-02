@@ -1,5 +1,5 @@
-from .llama import Llama
-from .traits import Traits, Mood, Hat, Scarf, Optic, Skin, TraitType
-from .palette import Palette
 from .config import Config
 from .artist import Artist
+from .artworks import ArtWork, Llama
+from .properties import Property, Properties
+from .palettes import Palette
