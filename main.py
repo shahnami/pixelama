@@ -21,11 +21,11 @@ def store_hash(art: ArtWork):
         f.write(hashlib.sha256(bytes(art)).hexdigest() + "\n")
 
 
-def generate(*, config_path: str, class_type: ArtWork, file_name: str, is_demo: bool = False):
+def generate(*, config_path: str, file_name: str, is_demo: bool = False):
     try:
         print(f"[ℹ] Generating...")
 
-        parser = Parser(path=config_path, class_type=class_type)
+        parser = Parser(path=config_path)
         art = parser.parse()
         if not is_demo and is_unique(art):
             store_hash(art)
@@ -66,18 +66,16 @@ if __name__ == '__main__':
             '-o', '--output', help='Path to save the output image', type=str)
         parser.add_argument(
             '-c', '--config', help='Path to the configuration file', type=str)
-        parser.add_argument('-t', '--type', help='Class Type')
         parser.add_argument(
             '-d', '--demo', help='Execute a demo version of the script', action='store_true')
 
         args = parser.parse_args()
-
-        if args.config and args.type:
-            generate(config_path=args.config, class_type=eval(args.type),
+        if args.config:
+            generate(config_path=args.config,
                      file_name=args.output or "", is_demo=args.demo or False)
         else:
             print(
-                "[✘] Arguments --config and --type were not provided. Use -h for more information.")
+                "[✘] Argument --config was not provided. Use -h for more information.")
     except:
         # output error, and return with an error code
         exit(0)

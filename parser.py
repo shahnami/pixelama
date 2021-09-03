@@ -4,7 +4,7 @@ from models.palettes import Palette
 from models.properties import Properties
 from models.config import Config
 from models.artist import Artist
-from models.artworks import ArtWork
+from models.artworks import *
 
 
 class Parser:
@@ -12,15 +12,17 @@ class Parser:
     path: str
     class_type: ArtWork
 
-    def __init__(self, *, path: str, class_type: ArtWork):
+    def __init__(self, *, path: str):
         self.path = path
-        self.class_type = class_type
+        self.class_type = ArtWork
 
     def parse(self) -> ArtWork:
         print(f"[ℹ] Reading Configuration File: {self.path}")
         with open(self.path, "r") as f:
             settings = json.load(f)
             print(f"[✓] Loaded Configuration File")
+            self.class_type = eval(settings["class"])
+            print(f"[✓] Identified Class Type: {self.class_type.__name__}")
             return self.populate(obj=settings["configuration"])
 
     def populate(self, *, obj: dict) -> ArtWork:

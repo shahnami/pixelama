@@ -1,5 +1,5 @@
 {
-  "animal": "llama",
+  "class": "Llama",
   "assets": "assets/artwork/llama/",
   "configuration": {
     "rows": 37,

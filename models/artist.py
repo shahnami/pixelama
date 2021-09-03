@@ -40,8 +40,8 @@ class Artist:
 
     def backToStart(self):
         penup()
-        goto((-self.configuration.rows * self.configuration.pixel_size) / 2 - self.configuration.pixel_size * 4,
-             (self.configuration.cols * self.configuration.pixel_size) / 2 - self.configuration.pixel_size/2)
+        goto((-self.configuration.cols * self.configuration.pixel_size) / 2 - self.configuration.pixel_size * 4,
+             (self.configuration.rows * self.configuration.pixel_size) / 2 - self.configuration.pixel_size/2)
         pendown()
 
     def switchToSave(self, *, newPen: any, newScreen: any):
