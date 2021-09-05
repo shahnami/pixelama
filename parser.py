@@ -23,13 +23,13 @@ class Parser:
             print(f"[✓] Loaded Configuration File")
             self.class_type = eval(settings["class"])
             print(f"[✓] Identified Class Type: {self.class_type.__name__}")
-            return self.populate(obj=settings["configuration"])
+            return self.populate(obj=settings["configuration"], assets_path=settings["assets"])
 
-    def populate(self, *, obj: dict) -> ArtWork:
+    def populate(self, *, obj: dict, assets_path: str) -> ArtWork:
         print(f"[ℹ] Initialising Properties Object")
 
         properties = Properties(
-            configuration=obj['properties']).get_selected_properties()
+            configuration=obj['properties'], assets_path=assets_path).get_selected_properties()
 
         print(f"[ℹ] Initialising Palette")
         palette = Palette(properties=properties,

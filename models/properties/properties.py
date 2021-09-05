@@ -11,18 +11,18 @@ class Properties:
     all_random_properties: dict
     selected_properties: dict
 
-    def __init__(self, *, configuration: dict):
+    def __init__(self, *, configuration: dict, assets_path: str):
         self.properties = []
         self.all_random_properties = {}
-        self.populate(configuration=configuration)
+        self.populate(configuration=configuration, assets_path=assets_path)
         self.selected_properties = self.get_random_set_of_properties()
 
-    def populate(self, *, configuration: dict):
+    def populate(self, *, configuration: dict, assets_path: str):
         for i, (prop_key, prop_value) in enumerate(configuration.items()):
             list_of_odds = []
             for j, (k, v) in enumerate(prop_value.items()):
                 prop = Property(
-                    layer=v["layer"], name=prop_key, value=k, asset=v["asset"])
+                    layer=v["layer"], name=prop_key, value=k, asset=v["asset"] and assets_path+v["asset"] or "")
                 self.properties.append(prop)
                 list_of_odds += [prop] * int(v["odds"] * 100)
             self.all_random_properties[prop_key] = list_of_odds

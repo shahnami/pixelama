@@ -16,7 +16,7 @@ The configuration file must contain certain keys. A description of a new configu
 ```
 {
   "class": "Monkey", // This is the name of the class of your art, which is a subclass of ArtWork
-  "assets": "assets/artwork/monkey/", // This is the path to the assets for your class, and needs to be created
+  "assets": "assets/artwork/monkey", // This is the path to the assets for your class, and needs to be created.
   "configuration": {
     "rows": 37, // This is the recommended number of rows for your grid
     "cols": 37, // This is the recommended number of columns for your grid
@@ -28,7 +28,7 @@ The configuration file must contain certain keys. A description of a new configu
     "properties": {
       "skin": { // Name of your first property, can be anything you want.
         "default": { // Recommended to have a default which basically stands for "none"
-          "asset": "assets/artwork/monkey/skins/default.txt", // This can be empty if needs to draw nothing
+          "asset": "skins/default.txt", // This can be empty if needs to draw nothing
           "odds": 0.85, // This is the odd of having the Default Skin property
           "layer": 0, // Each property is drawn layer by layer, starting from 0, as to not overlap unexpectedly
           "palette": { // Each property must have a palette definition
@@ -47,7 +47,7 @@ The configuration file must contain certain keys. A description of a new configu
           }
         },
         "black": {
-          "asset": "assets/artwork/monkey/skins/black.txt",
+          "asset": "/skins/black.txt",
           "odds": 0.14,
           "layer": 0,
           "palette": {
@@ -79,7 +79,7 @@ The configuration file must contain certain keys. A description of a new configu
           }
         },
         "homburg": {
-          "asset": "assets/artwork/monkey/hats/homburg.txt",
+          "asset": "/hats/homburg.txt",
           "odds": 0.05,
           "layer": 2,
           "palette": {
@@ -103,7 +103,7 @@ The configuration file must contain certain keys. A description of a new configu
           }
         },
         "cool": {
-          "asset": "assets/artwork/monkey/optics/cool.txt",
+          "asset": "/optics/cool.txt",
           "odds": 0.15,
           "layer": 4,
           "palette": {

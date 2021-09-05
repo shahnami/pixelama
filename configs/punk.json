@@ -1,0 +1,59 @@
+{
+  "class": "Punk",
+  "assets": "assets/artwork/punk",
+  "configuration": {
+    "rows": 24,
+    "cols": 24,
+    "pixel_size": 50,
+    "pen_size": 1,
+    "primary": ["#FFFFFF"],
+    "secondary": ["#000000"],
+    "background": [
+      "#547a8d"
+    ],
+    "properties": {
+      "base": {
+        "default": {
+          "asset": "/base/default.txt",
+          "odds": 1,
+          "layer": 0,
+          "palette": {
+            "skin": {
+              "pixel": 1,
+              "hex": ["#d3f6f8"]
+            },
+            "shadow": {
+              "pixel": 2,
+              "hex": ["#a9d9d8"]
+            },
+            "tertiery": {
+              "pixel": 3,
+              "hex": ["#000000"]
+            },
+            "darkshadow": {
+              "pixel": 4,
+              "hex": ["#8bacb6"]
+            }
+          }
+        }
+      },
+      "headgear": {
+        "default": {
+          "asset": "/headgear/sportsband.txt",
+          "odds": 1,
+          "layer": 1,
+          "palette": {
+            "primary": {
+              "pixel": 1,
+              "hex": ["#fefdfd"]
+            },
+            "secondary": {
+              "pixel": 2,
+              "hex": ["#3e60c5"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

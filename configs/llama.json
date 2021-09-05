@@ -1,6 +1,6 @@
 {
   "class": "Llama",
-  "assets": "assets/artwork/llama/",
+  "assets": "assets/artwork/llama",
   "configuration": {
     "rows": 37,
     "cols": 37,
@@ -25,7 +25,7 @@
     "properties": {
       "skin": {
         "default": {
-          "asset": "assets/artwork/llama/skins/default.txt",
+          "asset": "/skins/default.txt",
           "odds": 0.85,
           "layer": 0,
           "palette": {
@@ -44,7 +44,7 @@
           }
         },
         "beige": {
-          "asset": "assets/artwork/llama/skins/beige.txt",
+          "asset": "/skins/beige.txt",
           "odds": 0.01,
           "layer": 0,
           "palette": {
@@ -63,7 +63,7 @@
           }
         },
         "black": {
-          "asset": "assets/artwork/llama/skins/black.txt",
+          "asset": "/skins/black.txt",
           "odds": 0.14,
           "layer": 0,
           "palette": {
@@ -95,7 +95,7 @@
           }
         },
         "poncho": {
-          "asset": "assets/artwork/llama/scarfs/poncho.txt",
+          "asset": "/scarfs/poncho.txt",
           "odds": 0.5,
           "layer": 1,
           "palette": {
@@ -136,7 +136,7 @@
           }
         },
         "bowtie": {
-          "asset": "assets/artwork/llama/scarfs/bowtie.txt",
+          "asset": "/scarfs/bowtie.txt",
           "odds": 0.1,
           "layer": 1,
           "palette": {
@@ -177,7 +177,7 @@
           }
         },
         "tie": {
-          "asset": "assets/artwork/llama/scarfs/tie.txt",
+          "asset": "/scarfs/tie.txt",
           "odds": 0.1,
           "layer": 1,
           "palette": {
@@ -231,7 +231,7 @@
           }
         },
         "homburg": {
-          "asset": "assets/artwork/llama/hats/homburg.txt",
+          "asset": "/hats/homburg.txt",
           "odds": 0.05,
           "layer": 2,
           "palette": {
@@ -255,7 +255,7 @@
           }
         },
         "angry": {
-          "asset": "assets/artwork/llama/moods/angry.txt",
+          "asset": "/moods/angry.txt",
           "odds": 0.15,
           "layer": 3,
           "palette": {
@@ -266,7 +266,7 @@
           }
         },
         "blush": {
-          "asset": "assets/artwork/llama/moods/blush.txt",
+          "asset": "/moods/blush.txt",
           "odds": 0.1,
           "layer": 3,
           "palette": {
@@ -277,7 +277,7 @@
           }
         },
         "sick": {
-          "asset": "assets/artwork/llama/moods/sick.txt",
+          "asset": "/moods/sick.txt",
           "odds": 0.15,
           "layer": 3,
           "palette": {
@@ -301,7 +301,7 @@
           }
         },
         "cool": {
-          "asset": "assets/artwork/llama/optics/cool.txt",
+          "asset": "/optics/cool.txt",
           "odds": 0.15,
           "layer": 4,
           "palette": {
